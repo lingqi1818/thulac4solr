@@ -8,17 +8,16 @@
   </parent>
 
   <groupId>io.github.yizhiru</groupId>
-  <artifactId>thulac4j</artifactId>
+  <artifactId>thulac4solr</artifactId>
   <version>1.2.0</version>
   <packaging>jar</packaging>
 
-  <name>thulac4j</name>
-  <url>https://github.com/yizhiru/thulac4j</url>
-  <description>Java implementation of THULAC.</description>
+  <name>thulac4solr</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>1.7</maven.compiler.target>
+    <lucene.version>5.1.0</lucene.version>
   </properties>
 
   <licenses>
@@ -34,12 +33,11 @@
       <name>yizhiru</name>
       <email>j.y.zheng@qq.com</email>
     </developer>
+    <developer>
+      <name>chenke</name>
+      <url>http://www.dumpcache.com</url>
+    </developer>
   </developers>
-  <scm>
-    <connection>scm:git:git@github.com:yizhiru/thulac4j.git</connection>
-    <developerConnection>scm:git:git@github.com:yizhiru/thulac4j.git</developerConnection>
-    <url>git@github.com:yizhiru/thulac4j.git</url>
-  </scm>
 
   <dependencies>
     <dependency>
@@ -54,6 +52,24 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
+    
+     <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-core</artifactId>
+      <version>${lucene.version}</version>
+    </dependency>
+ 
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-queryparser</artifactId>
+      <version>${lucene.version}</version>
+    </dependency>
+ 
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-analyzers-common</artifactId>
+      <version>${lucene.version}</version>
+    </dependency>                     
   </dependencies>
 
   <build>
@@ -128,18 +144,6 @@
           </execution>
         </executions>
       </plugin>
-     <!-- <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>-->
     </plugins>
   </build>
 
