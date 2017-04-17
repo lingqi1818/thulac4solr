@@ -17,7 +17,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>1.7</maven.compiler.target>
-    <lucene.version>5.1.0</lucene.version>
+    <lucene.version>5.3.1</lucene.version>
   </properties>
 
   <licenses>
@@ -127,6 +127,22 @@
           </excludes>
         </configuration>
       </plugin>
+      <plugin>  
+	    <groupId>org.apache.maven.plugins</groupId>  
+	    <artifactId>maven-dependency-plugin</artifactId>  
+	    <executions>  
+	    <execution>  
+	    <id>copy</id>  
+	    <phase>install</phase>  
+	    <goals>  
+	        <goal>copy-dependencies</goal>  
+	    </goals>  
+	    <configuration>  
+	    <outputDirectory>libs</outputDirectory>
+	    </configuration>  
+	    </execution>  
+	    </executions>  
+		</plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>

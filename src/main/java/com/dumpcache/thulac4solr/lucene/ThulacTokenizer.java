@@ -16,8 +16,10 @@ import io.github.yizhiru.thulac4j.SegOnly;
  */
 public final class ThulacTokenizer extends Tokenizer {
 
+    //TODO 解决多线程问题
+
     //Thulac分词器实现
-    private SegOnly           seg;
+    private static SegOnly    seg;
     private Iterator<String>  tokensIt;
 
     //词元文本属性
@@ -28,6 +30,12 @@ public final class ThulacTokenizer extends Tokenizer {
     private int               endPosition;
 
     private int               index = 0;
+
+    static {
+        InputStream in = Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream("seg_only.bin");
+        seg = new SegOnly(in);
+    }
 
     public ThulacTokenizer() {
         super();
@@ -50,16 +58,17 @@ public final class ThulacTokenizer extends Tokenizer {
     private void init() throws IOException {
         offsetAtt = addAttribute(OffsetAttribute.class);
         termAtt = addAttribute(CharTermAttribute.class);
-        InputStream in = Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream("seg_only.bin");
-        seg = new SegOnly(in);
+    }
+
+    private String getQuery() throws IOException {
         char[] buf = new char[1024];
         int len = -1;
         StringBuilder sb = new StringBuilder();
         while ((len = input.read(buf)) != -1) {
             sb.append(buf, 0, len);
         }
-        tokensIt = seg.segment(sb.toString()).iterator();
+
+        return sb.toString();
     }
 
     /*
@@ -68,10 +77,12 @@ public final class ThulacTokenizer extends Tokenizer {
      */
     @Override
     public boolean incrementToken() throws IOException {
+        if (tokensIt == null) {
+            tokensIt = seg.segment(getQuery()).iterator();
+        }
         //清除所有的词元属性
         clearAttributes();
-        String nextLexeme = tokensIt.next();
-        if (nextLexeme != null) {
+        if (tokensIt.hasNext()) {
             String token = tokensIt.next();
             //将Lexeme转成Attributes
             //设置词元文本
@@ -87,6 +98,7 @@ public final class ThulacTokenizer extends Tokenizer {
             return true;
         }
         //返会false告知词元输出完毕
+        tokensIt = null;
         return false;
     }
 
@@ -97,13 +109,7 @@ public final class ThulacTokenizer extends Tokenizer {
     @Override
     public void reset() throws IOException {
         super.reset();
-        char[] buf = new char[1024];
-        int len = -1;
-        StringBuilder sb = new StringBuilder();
-        while ((len = input.read(buf)) != -1) {
-            sb.append(buf, 0, len);
-        }
-        tokensIt = seg.segment(sb.toString()).iterator();
+        tokensIt = null;
     }
 
     @Override

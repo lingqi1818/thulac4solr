@@ -8,6 +8,16 @@ import org.apache.lucene.analysis.Tokenizer;
  */
 public final class ThulacAnalyzer extends Analyzer {
 
+    private boolean useSmart;
+
+    public boolean useSmart() {
+        return useSmart;
+    }
+
+    public void setUseSmart(boolean useSmart) {
+        this.useSmart = useSmart;
+    }
+
     /**
      * IK分词器Lucene Analyzer接口实现类 默认细粒度切分算法
      */
@@ -16,12 +26,13 @@ public final class ThulacAnalyzer extends Analyzer {
     }
 
     /**
-     * Thulac分词器Lucene Analyzer接口实现类
+     * IK分词器Lucene Analyzer接口实现类
      * 
      * @param useSmart 当为true时，分词器进行智能切分
      */
     public ThulacAnalyzer(boolean useSmart) {
         super();
+        this.useSmart = useSmart;
     }
 
     /**
@@ -29,8 +40,8 @@ public final class ThulacAnalyzer extends Analyzer {
      */
     @Override
     protected TokenStreamComponents createComponents(String fieldName) {
-        Tokenizer _IKTokenizer = new ThulacTokenizer();
-        return new TokenStreamComponents(_IKTokenizer);
+        Tokenizer tokenizer = new ThulacTokenizer();
+        return new TokenStreamComponents(tokenizer);
     }
 
 }
