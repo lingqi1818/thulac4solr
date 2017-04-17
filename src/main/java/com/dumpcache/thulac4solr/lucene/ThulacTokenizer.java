@@ -16,8 +16,6 @@ import io.github.yizhiru.thulac4j.SegOnly;
  */
 public final class ThulacTokenizer extends Tokenizer {
 
-    //TODO 解决多线程问题
-
     //Thulac分词器实现
     private static SegOnly    seg;
     private Iterator<String>  tokensIt;
@@ -31,7 +29,7 @@ public final class ThulacTokenizer extends Tokenizer {
 
     private int               index = 0;
 
-    public static void INIT() {
+    static {
         InputStream in = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream("seg_only.bin");
         seg = new SegOnly(in);
