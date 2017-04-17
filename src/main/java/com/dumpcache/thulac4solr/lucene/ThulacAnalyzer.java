@@ -33,6 +33,7 @@ public final class ThulacAnalyzer extends Analyzer {
     public ThulacAnalyzer(boolean useSmart) {
         super();
         this.useSmart = useSmart;
+        ThulacTokenizer.INIT();
     }
 
     /**

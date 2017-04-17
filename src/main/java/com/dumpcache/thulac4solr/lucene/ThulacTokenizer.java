@@ -31,7 +31,7 @@ public final class ThulacTokenizer extends Tokenizer {
 
     private int               index = 0;
 
-    static {
+    public static void INIT() {
         InputStream in = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream("seg_only.bin");
         seg = new SegOnly(in);
