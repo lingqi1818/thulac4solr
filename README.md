@@ -4,6 +4,8 @@
 * 感谢@yizhiru 我在thulac4j基础上从java8工程移植为支持java7，并且支持solr.
 
 #集成方法
+
+
 `
 <fieldType name="thulac_ik" class="solr.TextField">
     <analyzer type="index" isMaxWordLength="false" class="com.dumpcache.thulac4solr.lucene.ThulacAnalyzer"/>
